@@ -1,0 +1,22 @@
+.wall {
+	-fx-background-color: black;
+}
+.road {
+	-fx-background-color: white;
+}
+.start {
+	-fx-background-color: blue;
+}
+.goal {
+	-fx-background-color: red;
+}
+.route {
+	-fx-background-color: green;
+}
+.button {
+	-fx-border-style: solid;
+	-fx-border-width: 0.3;
+}
+.button:disabled, .button:disabled > * {
+	-fx-opacity: 1.0;
+}
