@@ -71,8 +71,9 @@ public class Element extends Button implements Point {
 	@FXML
 	private void mouseClicked(MouseEvent e) {
 		if (e.getButton().equals(MouseButton.SECONDARY) || !Stream.of("wall", "road").anyMatch(s->s.equals(getStyleClass().get(1)))) return;
-		if (canWalk()) reset();
-		else changeMode("wall");
+		if (canWalk()) changeMode("wall");
+		else reset();
+		System.out.println(getStyleClass());
 	}
 	
 	@FXML
