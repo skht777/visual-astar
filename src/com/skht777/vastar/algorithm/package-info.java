@@ -2,7 +2,7 @@
  * 
  */
 /**
- * algorithm for A*
+ * algorithm for A* & Digger
  * 
  * @author skht777
  *

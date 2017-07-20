@@ -1,11 +1,12 @@
 package com.skht777.vastar.algorithm;
 
 public interface Point {
-	
-	public boolean canWalk();
-	
-	public void reset();
-	
-	public void set();
-	
+
+	boolean canWalk();
+
+	void reset();
+
+	void set();
+
+	void block();
 }
