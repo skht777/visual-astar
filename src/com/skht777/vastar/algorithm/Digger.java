@@ -1,5 +1,6 @@
 package com.skht777.vastar.algorithm;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,7 +11,6 @@ import java.util.stream.Stream;
  * @author skht777
  */
 public class Digger {
-
 	private Creator creator;
 	private List<DigPoint> digList;
 
@@ -32,15 +32,10 @@ public class Digger {
 
 	public void continueCreate() {
 		DigPoint p = digList.get(0);
-		if (!p.isDigable()) {
-			digList = digList.stream().skip(1).collect(Collectors.toList());
-			return;
-		}
 		p.dig();
-		List<Integer> v = IntStream.range(0, 4).boxed().collect(Collectors.toList());
+		List<Vector> v = Arrays.asList(Vector.values());
 		Collections.shuffle(v);
-		digList = Stream.concat(v.stream()
-				.map(p::createNextPoint).filter(DigPoint::isDigable), digList.stream().skip(1))
-				.collect(Collectors.toList());
+		digList = Stream.concat(v.stream().map(p::createNextPoint), digList.stream().skip(1))
+				.filter(DigPoint::isDigable).collect(Collectors.toList());
 	}
 }
