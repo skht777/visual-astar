@@ -1,50 +1,49 @@
 /**
- * 
+ *
  */
 package com.skht777.vastar.algorithm;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author skht777
- *
  */
 public class AStar {
 
 	private ScoredPath spath;
 	private List<ScoredPath> pathes;
 
-	/**
-	 * 
-	 */
 	public AStar(Solver solver) {
 		ScoredPath.setSolver(solver);
 	}
-	
+
 	public void launch(Point start, Point goal) {
 		pathes = ScoredPath.init(start, goal);
 	}
-	
+
 	public boolean canContinue() {
 		// 停止条件
-		return Optional.ofNullable(pathes).filter(p->!p.isEmpty() && !pathes.get(0).isReached()).isPresent();
+		return pathes != null && !pathes.stream().findFirst().filter(ScoredPath::isReached).isPresent();
 	}
-	
+
 	public void continueSolve() {
 		clear();
-		spath = pathes.remove(0);
+		spath = pathes.get(0);
 		// その点から行ける全ての点について
-		spath.getNeighbors().forEach(s->pathes.add(0, new ScoredPath(spath, s)));
 		// 正しいスコア順になるように並べ替え
-		pathes.sort(ScoredPath::compareTo);
+		pathes = Stream.concat(pathes.stream().skip(1),
+				spath.createNeighborPathes().stream())
+				.sorted().collect(Collectors.toList());
 		// 新たに開拓したルートを塗りつぶす
-		spath.getPath().forEach(Point::set);
+		spath.forEach(Point::set);
 	}
-	
+
 	public void clear() {
 		// 塗りつぶしを消去する
-		Optional.ofNullable(spath).ifPresent(sp->sp.getPath().forEach(Point::reset));
+		Optional.ofNullable(spath).ifPresent(sp -> sp.forEach(Point::reset));
 	}
 
 }
