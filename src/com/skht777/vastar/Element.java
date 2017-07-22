@@ -49,7 +49,7 @@ public class Element extends Button implements Point {
 
 	public Element(int x, int y) {
 		super();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("resource/Element.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("resource/element.fxml"));
 		loader.setRoot(this);
 		loader.setController(this);
 		try {

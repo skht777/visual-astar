@@ -16,7 +16,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			primaryStage.setScene(FXMLLoader.load(getClass().getResource("resource/Main.fxml")));
+			primaryStage.setScene(FXMLLoader.load(getClass().getResource("resource/main.fxml")));
 			primaryStage.setTitle("迷路作るやつ");
 			primaryStage.setResizable(false);
 			primaryStage.show();
