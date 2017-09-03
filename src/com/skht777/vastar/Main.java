@@ -5,6 +5,7 @@ package com.skht777.vastar;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
@@ -16,7 +17,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			primaryStage.setScene(FXMLLoader.load(getClass().getResource("resource/main.fxml")));
+			primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("resource/main.fxml"))));
 			primaryStage.setTitle("迷路作るやつ");
 			primaryStage.setResizable(false);
 			primaryStage.show();
