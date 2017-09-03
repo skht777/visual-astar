@@ -6,7 +6,6 @@ package com.skht777.vastar;
 import com.skht777.vastar.algorithm.AStar;
 import com.skht777.vastar.algorithm.Point;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
@@ -15,7 +14,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
-import java.io.IOException;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -25,6 +23,7 @@ import java.util.stream.Stream;
 public class Element extends Button implements Point {
 
 	private static Element start, goal;
+	private static String css = Element.class.getResource("resource/style.css").toExternalForm();
 
 	public static void setInit(Element start, Element goal) {
 		setStart(start);
@@ -49,14 +48,13 @@ public class Element extends Button implements Point {
 
 	public Element(int x, int y) {
 		super();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("resource/element.fxml"));
-		loader.setRoot(this);
-		loader.setController(this);
-		try {
-			loader.load();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+		getStylesheets().add(css);
+		reset();
+		setOnContextMenuRequested(this::contextMenu);
+		setOnMouseClicked(this::mouseClicked);
+		setMnemonicParsing(false);
+		setPrefSize(20, 20);
+		setMinSize(0, 0);
 		GridPane.setColumnIndex(this, x);
 		GridPane.setRowIndex(this, y);
 	}
