@@ -21,9 +21,7 @@ public class Digger implements Executor {
 
 	@Override
 	public void launch() {
-		IntStream.range(0, creator.getWidth()).forEach(x ->
-				IntStream.range(0, creator.getHeight()).forEach(y ->
-						creator.getPoint(x, y).block()));
+		clear();
 		digList = DigPoint.init();
 	}
 
@@ -44,6 +42,8 @@ public class Digger implements Executor {
 
 	@Override
 	public void clear() {
-
+		IntStream.range(0, creator.getWidth()).forEach(x ->
+				IntStream.range(0, creator.getHeight()).forEach(y ->
+						creator.getPoint(x, y).block()));
 	}
 }

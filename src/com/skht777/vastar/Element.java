@@ -21,7 +21,7 @@ import java.util.stream.Stream;
  * @author skht777
  */
 public class Element extends Button implements Point {
-	private static String css = Element.class.getResource("../resource/style.css").toExternalForm();
+	private static String css = Element.class.getResource("resource/style.css").toExternalForm();
 	private static Consumer<Predicate<Point>> reset;
 
 	public static void setFunction(BiConsumer<Predicate<Point>, Consumer<Point>> change) {
