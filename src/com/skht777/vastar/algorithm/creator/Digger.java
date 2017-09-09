@@ -1,4 +1,6 @@
-package com.skht777.vastar.algorithm;
+package com.skht777.vastar.algorithm.creator;
+
+import com.skht777.vastar.algorithm.Executor;
 
 import java.util.Arrays;
 import java.util.Collections;

@@ -1,4 +1,6 @@
-package com.skht777.vastar.algorithm;
+package com.skht777.vastar.algorithm.solver;
+
+import com.skht777.vastar.algorithm.Point;
 
 import java.util.*;
 import java.util.function.Consumer;

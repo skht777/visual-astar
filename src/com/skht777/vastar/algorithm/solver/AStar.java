@@ -1,7 +1,10 @@
 /**
  *
  */
-package com.skht777.vastar.algorithm;
+package com.skht777.vastar.algorithm.solver;
+
+import com.skht777.vastar.algorithm.Executor;
+import com.skht777.vastar.algorithm.Point;
 
 import java.util.List;
 import java.util.Optional;
