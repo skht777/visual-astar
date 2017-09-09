@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 /**
  * @author skht777
  */
-public class AStar {
+public class AStar implements Executor {
 
 	private ScoredPath spath;
 	private List<ScoredPath> pathes;
@@ -20,16 +20,19 @@ public class AStar {
 		ScoredPath.setSolver(solver);
 	}
 
-	public void launch(Point start, Point goal) {
-		pathes = ScoredPath.init(start, goal);
+	@Override
+	public void launch() {
+		pathes = ScoredPath.init();
 	}
 
+	@Override
 	public boolean canContinue() {
 		// 停止条件
 		return pathes != null && !pathes.stream().findFirst().filter(ScoredPath::isReached).isPresent();
 	}
 
-	public void continueSolve() {
+	@Override
+	public void continueDo() {
 		clear();
 		spath = pathes.get(0);
 		// その点から行ける全ての点について
@@ -41,6 +44,7 @@ public class AStar {
 		spath.forEach(Point::set);
 	}
 
+	@Override
 	public void clear() {
 		// 塗りつぶしを消去する
 		Optional.ofNullable(spath).ifPresent(sp -> sp.forEach(Point::reset));
