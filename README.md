@@ -6,6 +6,8 @@ A* solve process visualizer using JavaFX
 穴掘り法による迷路の作成とA*による任意の二点間の経路探索ができます。
 
 
+![circleanimationmuvie](https://raw.githubusercontent.com/skht777/visual-astar/master/image/sample.gif)
+
 
 visual-astarこと「迷路作るやつ」はJavaFXと標準ライブラリだけで作られています。
 Java8であれば動くはずです。
