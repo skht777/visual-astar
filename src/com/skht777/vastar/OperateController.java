@@ -1,59 +1,100 @@
 package com.skht777.vastar;
 
-import com.skht777.vastar.algorithm.AStar;
-import javafx.animation.Animation;
+import com.skht777.vastar.algorithm.Executor;
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import static javafx.animation.Animation.Status.RUNNING;
+import static javafx.animation.Animation.Status.STOPPED;
 
 /**
  * @author skht777
  */
 public class OperateController implements Initializable {
+	@FXML
+	private String create;
+	@FXML
+	private Button button;
+	private NodeOperator operator;
 	private Timeline timer;
-	private AStar astar;
+	private Executor executor;
+
+	private void finish() {
+		button.setText("スタート");
+		timer.stop();
+		operator.applyNodeDisable(false);
+	}
+
+	@FXML
+	private void skip() {
+		if (timer.getStatus() == STOPPED) executor.launch();
+		while (executor.canContinue()) {
+			executor.continueDo();
+		}
+	}
 
 	@FXML
 	private void launch() {
-		if (timer.getStatus().equals(Animation.Status.RUNNING)) {
-			//button.setText("スタート");
+		if (timer.getStatus() == RUNNING) {
+			button.setText("スタート");
 			timer.pause();
 		} else {
-			if (timer.getStatus().equals(Animation.Status.STOPPED) || !astar.canContinue()) {
-				Element.launch(astar);
-				//gridController.setElementDisable(true);
+			if (timer.getStatus() == STOPPED || !executor.canContinue()) {
+				executor.launch();
+				operator.applyNodeDisable(true);
 			}
-			//button.setText("ポーズ");
+			button.setText("ポーズ");
 			timer.play();
 		}
 	}
 
 	@FXML
 	private void stop() {
-		if (timer.getStatus().equals(Animation.Status.STOPPED)) return;
-		//button.setText("スタート");
-		timer.stop();
-		astar.clear();
-		//gridController.setElementDisable(false);
+		finish();
+		executor.clear();
 	}
 
 	@FXML
 	private void reset() {
 		stop();
-		//gridController.clear();
+		operator.reset();
+	}
+
+	@FXML
+	private void select(ActionEvent e) {
+		if (timer.getStatus() == RUNNING) timer.stop();
+		ChoiceBox c = (ChoiceBox) e.getSource();
+		if (c.getSelectionModel().getSelectedItem().equals(create)) {
+			executor = operator.getDigger();
+		} else {
+			executor = operator.getAstar();
+		}
+	}
+
+	public void setOperator(NodeOperator operator) {
+		this.operator = operator;
+		executor = operator.getDigger();
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		/*astar = gridController.getSolver();
 		timer = new Timeline();
 		timer.getKeyFrames().add(new KeyFrame(Duration.millis(100), e -> {
-			if (astar.canContinue()) astar.continueSolve();
-			else launch();
+			if (executor.canContinue()) {
+				executor.continueDo();
+			} else {
+				finish();
+			}
 		}));
-		timer.setCycleCount(Timeline.INDEFINITE);*/
+		timer.setCycleCount(Timeline.INDEFINITE);
 	}
 }
