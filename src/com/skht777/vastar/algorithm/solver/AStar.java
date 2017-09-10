@@ -31,7 +31,7 @@ public class AStar implements Executor {
 	@Override
 	public boolean canContinue() {
 		// 停止条件
-		return pathes != null && !pathes.stream().findFirst().filter(ScoredPath::isReached).isPresent();
+		return !pathes.isEmpty() && !pathes.stream().findFirst().filter(ScoredPath::isReached).isPresent();
 	}
 
 	@Override

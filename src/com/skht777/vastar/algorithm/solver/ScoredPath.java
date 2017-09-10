@@ -21,6 +21,7 @@ class ScoredPath implements Comparable<ScoredPath> {
 	}
 
 	static List<ScoredPath> init() {
+		if (Objects.isNull(solver.getStart())) return Collections.emptyList();
 		visited = new HashSet<>();
 		visited.add(solver.getStart());
 		return Collections.singletonList(new ScoredPath(0, solver.getStart()));
