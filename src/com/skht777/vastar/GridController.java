@@ -3,6 +3,7 @@
  */
 package com.skht777.vastar;
 
+import com.skht777.vastar.algorithm.NodeOperator;
 import com.skht777.vastar.algorithm.Point;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

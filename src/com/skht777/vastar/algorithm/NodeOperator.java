@@ -1,6 +1,5 @@
-package com.skht777.vastar;
+package com.skht777.vastar.algorithm;
 
-import com.skht777.vastar.algorithm.Point;
 import com.skht777.vastar.algorithm.creator.Creator;
 import com.skht777.vastar.algorithm.creator.Digger;
 import com.skht777.vastar.algorithm.solver.AStar;
