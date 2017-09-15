@@ -39,7 +39,7 @@ public class NodeOperator {
 	}
 
 	public void reset() {
-		nodes.forEach(Point::reset);
+		nodes.forEach(Point::road);
 	}
 
 	public Digger getDigger() {

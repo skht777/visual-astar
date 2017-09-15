@@ -44,13 +44,13 @@ public class AStar implements Executor {
 				spath.createNeighborPathes().stream())
 				.sorted().collect(Collectors.toList());
 		// 新たに開拓したルートを塗りつぶす
-		spath.forEach(Point::set);
+		spath.forEach(Point::route);
 	}
 
 	@Override
 	public void clear() {
 		// 塗りつぶしを消去する
-		Optional.ofNullable(spath).ifPresent(sp -> sp.forEach(Point::reset));
+		Optional.ofNullable(spath).ifPresent(sp -> sp.forEach(Point::road));
 	}
 
 }

@@ -41,7 +41,7 @@ class DigPoint {
 	}
 
 	void dig() {
-		creator.getPoint(x, y).reset();
-		creator.getPoint(nx, ny).reset();
+		creator.getPoint(x, y).road();
+		creator.getPoint(nx, ny).road();
 	}
 }

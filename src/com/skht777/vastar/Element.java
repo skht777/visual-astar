@@ -25,13 +25,13 @@ public class Element extends Button implements Point {
 	private static Consumer<Predicate<Point>> reset;
 
 	public static void setFunction(BiConsumer<Predicate<Point>, Consumer<Point>> change) {
-		reset = cond -> change.accept(cond, Point::reset);
+		reset = cond -> change.accept(cond, Point::road);
 	}
 
 	public Element() {
 		super();
 		getStylesheets().add(css);
-		reset();
+		road();
 		setOnContextMenuRequested(this::contextMenu);
 		setOnMouseClicked(this::mouseClicked);
 		setMnemonicParsing(false);
@@ -53,7 +53,7 @@ public class Element extends Button implements Point {
 		if (e.getButton().equals(MouseButton.SECONDARY) ||
 				Stream.of("wall", "road").noneMatch(this::isMode)) return;
 		if (canWalk()) block();
-		else reset();
+		else road();
 	}
 
 	@FXML
@@ -93,12 +93,12 @@ public class Element extends Button implements Point {
 	}
 
 	@Override
-	public void set() {
+	public void route() {
 		changeMode("route");
 	}
 
 	@Override
-	public void reset() {
+	public void road() {
 		changeMode("road");
 	}
 

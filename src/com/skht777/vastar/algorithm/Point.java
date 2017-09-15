@@ -11,9 +11,9 @@ public interface Point {
 
 	void goal();
 
-	void reset();
+	void road();
 
-	void set();
+	void route();
 
 	void block();
 }
