@@ -21,14 +21,13 @@ class ScoredPath implements Comparable<ScoredPath> {
 	}
 
 	static List<ScoredPath> init() {
-		if (Objects.isNull(solver.getStart())) return Collections.emptyList();
 		visited = new HashSet<>();
-		visited.add(solver.getStart());
-		return Collections.singletonList(new ScoredPath(0, solver.getStart()));
+		solver.getStart().ifPresent(start -> visited.add(start));
+		return visited.stream().map(start -> new ScoredPath(0, start)).collect(Collectors.toList());
 	}
 
 	private ScoredPath(ScoredPath spath, Point ext) {
-		this(spath.score + solver.calcScore(ext, solver.getGoal()),
+		this(spath.score + solver.calcScore(ext, solver.getGoal().orElse(ext)),
 				Stream.concat(spath.path.stream(), Stream.of(ext)).toArray(Point[]::new));
 	}
 
@@ -38,7 +37,7 @@ class ScoredPath implements Comparable<ScoredPath> {
 	}
 
 	boolean isReached() {
-		return path.get(path.size() - 1).equals(solver.getGoal());
+		return solver.getGoal().map(goal -> path.get(path.size() - 1).equals(goal)).orElse(true);
 	}
 
 	List<ScoredPath> createNeighborPathes() {

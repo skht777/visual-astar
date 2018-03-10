@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 public class AStar implements Executor {
 
 	private ScoredPath spath;
-	private List<ScoredPath> pathes;
+	private List<ScoredPath> paths;
 
 	public AStar(Solver solver) {
 		ScoredPath.setSolver(solver);
@@ -25,22 +25,22 @@ public class AStar implements Executor {
 
 	@Override
 	public void launch() {
-		pathes = ScoredPath.init();
+		paths = ScoredPath.init();
 	}
 
 	@Override
 	public boolean canContinue() {
 		// 停止条件
-		return !pathes.isEmpty() && !pathes.stream().findFirst().filter(ScoredPath::isReached).isPresent();
+		return !paths.isEmpty() && !paths.stream().findFirst().filter(ScoredPath::isReached).isPresent();
 	}
 
 	@Override
 	public void continueDo() {
 		clear();
-		spath = pathes.get(0);
+		spath = paths.get(0);
 		// その点から行ける全ての点について
 		// 正しいスコア順になるように並べ替え
-		pathes = Stream.concat(pathes.stream().skip(1),
+		paths = Stream.concat(paths.stream().skip(1),
 				spath.createNeighborPathes().stream())
 				.sorted().collect(Collectors.toList());
 		// 新たに開拓したルートを塗りつぶす

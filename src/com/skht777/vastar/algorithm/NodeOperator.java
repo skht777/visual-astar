@@ -5,11 +5,10 @@ import com.skht777.vastar.algorithm.creator.Digger;
 import com.skht777.vastar.algorithm.solver.AStar;
 import com.skht777.vastar.algorithm.solver.Solver;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -25,10 +24,10 @@ public class NodeOperator {
 	private Digger digger;
 	private AStar astar;
 
-	public NodeOperator(int width, int height, Supplier<List<Point>> nodes, Consumer<Boolean> disableConsumer) {
+	public NodeOperator(int width, int height, List<Point> nodes, Consumer<Boolean> disableConsumer) {
 		this.width = width;
 		this.height = height;
-		this.nodes = nodes.get();
+		this.nodes = nodes;
 		disable = disableConsumer;
 		digger = new Digger(Creator.createCreator(width, height, this::index));
 		astar = new AStar(Solver.cleateSolver(this::neibors, this::calc, this::getStart, this::getGoal));
@@ -73,21 +72,19 @@ public class NodeOperator {
 		return neighbors.build();
 	}
 
-	private Point randomPoint(Consumer<Point> effect) {
-		Random r = new Random();
+	private Optional<Point> randomPoint(Consumer<Point> effect) {
 		List<Point> walkableNodes = nodes.stream().filter(Point::canWalk).collect(Collectors.toList());
-		if (walkableNodes.size() == 0) return null;
-		int n = r.ints(0, walkableNodes.size()).findFirst().getAsInt();
-		Optional<Point> p = walkableNodes.stream().skip(n).findFirst();
+		Collections.shuffle(walkableNodes);
+		Optional<Point> p = walkableNodes.stream().findFirst();
 		p.ifPresent(effect);
-		return p.get();
+		return p;
 	}
 
-	private Point getStart() {
-		return nodes.stream().filter(Point::isStart).findFirst().orElseGet(() -> randomPoint(Point::start));
+	private Optional<Point> getStart() {
+		return nodes.stream().filter(Point::isStart).findFirst().or(() -> randomPoint(Point::start));
 	}
 
-	private Point getGoal() {
-		return nodes.stream().filter(Point::isGoal).findFirst().orElseGet(() -> randomPoint(Point::goal));
+	private Optional<Point> getGoal() {
+		return nodes.stream().filter(Point::isGoal).findFirst().or(() -> randomPoint(Point::goal));
 	}
 }

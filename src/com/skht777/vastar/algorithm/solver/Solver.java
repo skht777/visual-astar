@@ -3,6 +3,7 @@ package com.skht777.vastar.algorithm.solver;
 import com.skht777.vastar.algorithm.Point;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.function.ToIntBiFunction;
@@ -10,7 +11,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public interface Solver {
-	static Solver cleateSolver(Function<Point, Stream<Point>> neighbor, ToIntBiFunction<Point, Point> score, Supplier<Point> start, Supplier<Point> goal) {
+	static Solver cleateSolver(Function<Point, Stream<Point>> neighbor, ToIntBiFunction<Point, Point> score, Supplier<Optional<Point>> start, Supplier<Optional<Point>> goal) {
 		return new Solver() {
 			@Override
 			public List<Point> getNeighbors(Point p) {
@@ -23,12 +24,12 @@ public interface Solver {
 			}
 
 			@Override
-			public Point getStart() {
+			public Optional<Point> getStart() {
 				return start.get();
 			}
 
 			@Override
-			public Point getGoal() {
+			public Optional<Point> getGoal() {
 				return goal.get();
 			}
 		};
@@ -38,8 +39,8 @@ public interface Solver {
 
 	int calcScore(Point p1, Point p2);
 
-	Point getStart();
+	Optional<Point> getStart();
 
-	Point getGoal();
+	Optional<Point> getGoal();
 
 }
